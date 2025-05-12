@@ -1,0 +1,57 @@
+python file: import csv
+import random
+
+# Load traffic data from CSV
+def read_traffic_data(file_path):
+    traffic_data = {}
+    with open(file_path, 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            location = row['Location']
+            vehicles = int(row['Vehicles'])
+            traffic_data[location] = vehicles
+    return traffic_data
+
+# Basic AI Traffic Signal Model
+def ai_signal_control(traffic_data):
+    print("\n--- AI-Based Traffic Signal Control ---")
+    for location, vehicles in traffic_data.items():
+        if vehicles > 70:
+            green_time = 90
+        elif vehicles > 40:
+            green_time = 60
+        else:
+            green_time = 30
+        print(f"Location: {location} | Vehicles: {vehicles} | Green Light: {green_time} seconds")
+
+# Basic Chatbot Function
+def traffic_chatbot():
+    print("\n--- Traffic Chatbot ---")
+    print("Ask me about traffic routes or report an incident.")
+    query = input("You: ").lower()
+    if "route" in query:
+        print("Bot: Avoid congested areas like Anna Salai. Try alternate routes like the Bypass Road.")
+    elif "accident" in query or "report" in query:
+        print("Bot: Thank you. Your report has been logged and sent to authorities.")
+    else:
+        print("Bot: Please ask about routes or report incidents.")
+
+# Simulated IoT Sensor Stream
+def iot_simulation(traffic_data):
+  print("\n--- IoT Sensor Data Simulation ---")
+    for location in traffic_data:
+        speed = random.randint(20, 60)
+        density = random.randint(1, 10)
+        print(f"{location}: Speed={speed} km/h | Density={density}/10")
+
+# Main function
+def main():
+    csv_file = "traffic_data.csv"
+    traffic_data = read_traffic_data(csv_file)
+
+    ai_signal_control(traffic_data)
+    iot_simulation(traffic_data)
+    traffic_chatbot()
+
+# Run the program
+main()
